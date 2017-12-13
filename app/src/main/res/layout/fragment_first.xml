@@ -1,20 +1,21 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="demo.bw.com.jingdong.view.fragment.FirstFragment">
 
-   <LinearLayout
+   <com.zhy.android.percent.support.PercentLinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical"
        >
        <com.youth.banner.Banner
-       xmlns:app="http://schemas.android.com/apk/res-auto"
        android:id="@+id/fa_banner"
-       android:layout_width="match_parent"
-       android:layout_height="200dp" >
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           app:layout_heightPercent="30%w"
+           app:layout_widthPercent="100%w" >
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="50dp"
@@ -28,10 +29,8 @@
                    android:background="@mipmap/sao_hei"
                    android:layout_centerVertical="true"
                    android:layout_marginLeft="10dp"
-
                    />
                <ImageView
-
                    android:layout_width="20dp"
                    android:layout_height="20dp"
                    android:background="@mipmap/search_icon2"
@@ -44,8 +43,6 @@
                    android:layout_height="30dp"
                    android:layout_centerInParent="true"
                    android:background="@drawable/sstitle"
-
-
                    />
                <ImageView
                    android:layout_width="20dp"
@@ -66,9 +63,16 @@
                    />
            </RelativeLayout>
        </com.youth.banner.Banner>
-
+       <android.support.v4.view.ViewPager
+           android:id="@+id/fa_viewpage"
+           android:layout_width="0dp"
+           android:layout_height="0dp"
+           app:layout_heightPercent="30%w"
+           app:layout_widthPercent="100%w"
+           >
+       </android.support.v4.view.ViewPager>
        
-   </LinearLayout>
+   </com.zhy.android.percent.support.PercentLinearLayout>
 
 
 </ScrollView>

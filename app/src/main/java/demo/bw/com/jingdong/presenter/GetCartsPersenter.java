@@ -3,6 +3,7 @@ package demo.bw.com.jingdong.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import demo.bw.com.jingdong.Api.OnListenerApi;
 import demo.bw.com.jingdong.Api.ShopFragmentApi;
 import demo.bw.com.jingdong.bean.CartBean;
 import demo.bw.com.jingdong.modle.GetCartsModle;
@@ -22,6 +23,8 @@ public class GetCartsPersenter {
         modle = new GetCartsModle();
     }
     public void getCarts(){
+
+
         modle.onImm(new Observer<CartBean>() {
             @Override
             public void onSubscribe(Disposable d) {

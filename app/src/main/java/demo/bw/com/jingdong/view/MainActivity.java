@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         bottomTabBar.init(getSupportFragmentManager())
                 .setImgSize(100,100)
                 .setFontSize(0)
-                .setTabPadding(10,6,6)
+                .setTabPadding(1,3,2)
                 .setChangeColor(Color.RED,Color.DKGRAY)
                 .addTabItem(null,R.mipmap.ac0, FirstFragment.class)
                 .addTabItem(null,R.mipmap.abw, ClassFragment.class)
@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
         int flag = intent.getIntExtra("flag", -2);
         if(flag>0){
             Toast.makeText(this,""+flag,Toast.LENGTH_SHORT).show();
-          if(flag==1){
-               FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-               transaction.replace(R.id.main_linear,new ShopFragment());
-               transaction.commit();
-           }
         }
     }
 }

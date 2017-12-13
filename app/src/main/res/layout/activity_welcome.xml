@@ -7,7 +7,4 @@
     tools:context="demo.bw.com.jingdong.view.activity.WelcomeActivity"
     android:background="@mipmap/b1i"
     >
-
-
-
 </LinearLayout>

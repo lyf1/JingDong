@@ -54,7 +54,7 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
         String s = split[0];
         Uri uri = Uri.parse(s);
         cpImg.setImageURI(uri);
-        cpPrice.setText("￥:"+list.getPrice());
+        cpPrice.setText("￥"+list.getPrice());
         cpTitle.setText(list.getTitle());
     }
 

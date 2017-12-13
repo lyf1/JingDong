@@ -33,7 +33,9 @@
             android:name=".view.activity.SearchDetailActivity"
             android:label="@string/title_activity_search_detail" />
         <activity android:name=".view.activity.C_childActivity" />
-        <activity android:name=".view.activity.ProductsActivity"></activity>
+        <activity android:name=".view.activity.ProductsActivity" />
+        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.RegistActivity"></activity>
     </application>
 
 </manifest>

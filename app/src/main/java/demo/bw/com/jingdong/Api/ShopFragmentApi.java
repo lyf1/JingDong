@@ -10,4 +10,5 @@ import demo.bw.com.jingdong.bean.CartBean;
 
 public interface ShopFragmentApi {
     void getShop(List<CartBean.DataBean> grouplist,List<List<CartBean.DataBean.ListBean>> childlist);
+     void showData(String str);
 }

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +35,9 @@ import demo.bw.com.jingdong.view.activity.SearchActivity;
 
 public class FirstFragment extends Fragment implements fristFragmentApi {
 
-
+    @BindView(R.id.fa_viewpage)
+    ViewPager view;
+    private ViewPager pager;
     @BindView(R.id.dimension)
     ImageView dimension;
     @BindView(R.id.sc)
@@ -42,7 +47,11 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
     Unbinder unbinder;
     @BindView(R.id.fa_banner)
     Banner faBanner;
-     private List<String> ilist=new ArrayList<>();
+    private List<String> ilist = new ArrayList<>();
+    private List<Fragment> flist = new ArrayList<>();
+    private F_fragment01 fragment01 = new F_fragment01();
+    private F_fragment02 fragment02 = new F_fragment02();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +59,8 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
         unbinder = ButterKnife.bind(this, view);
         fristPresenter fp = new fristPresenter(this);
         fp.getFristP();
+        flist.add(fragment01);
+        flist.add(fragment02);
 
         return view;
     }
@@ -78,7 +89,7 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
     @Override
     public void ShowData(fristBean bean) {
         List<fristBean.DataBean> data = bean.getData();
-        for(int i=0;i<data.size();i++){
+        for (int i = 0; i < data.size(); i++) {
             fristBean.DataBean dataBean = data.get(i);
             ilist.add(dataBean.getIcon());
         }
@@ -88,4 +99,5 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
         //banner设置方法全部调用完毕时最后调用
         faBanner.start();
     }
+
 }

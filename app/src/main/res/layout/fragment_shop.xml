@@ -18,11 +18,14 @@
        android:layout_width="match_parent"
        android:layout_height="50dp"
        android:orientation="horizontal"
+       android:background="@color/ashen"
        >
        <LinearLayout
            android:layout_width="0dp"
            android:layout_weight="1"
-           android:layout_height="match_parent">
+           android:layout_height="match_parent"
+
+           >
            <CheckBox
                 android:id="@+id/fs_qx"
                android:layout_width="wrap_content"
@@ -40,11 +43,13 @@
        <LinearLayout
            android:layout_width="0dp"
            android:layout_weight="2"
-           android:layout_height="match_parent">
+           android:layout_height="match_parent"
+
+           >
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-                 android:text="全选:￥"
+                 android:text="合计:￥"
                android:layout_marginLeft="10dp"
                android:layout_gravity="center_vertical"
                />
@@ -55,22 +60,35 @@
                android:layout_gravity="center_vertical"
                />
        </LinearLayout>
-       <RelativeLayout
+       <LinearLayout
            android:layout_width="0dp"
-           android:layout_weight="1"
+           android:layout_weight="2"
            android:layout_height="match_parent"
            android:background="@color/red"
+
            >
             <TextView
+                android:id="@+id/fs_del"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@color/yellow"
+                android:textColor="@color/red"
+                android:text="删除"
+                android:gravity="center"
+                android:textSize="15sp"
+                />
+            <TextView
                 android:id="@+id/fs_num"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                  android:textColor="@color/write"
                 android:text="去结算(0)"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
+                android:gravity="center"
+                android:textSize="15sp"
                 />
-       </RelativeLayout>
+       </LinearLayout>
 
    </LinearLayout>
 </LinearLayout>

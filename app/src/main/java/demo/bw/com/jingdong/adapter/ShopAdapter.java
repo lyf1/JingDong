@@ -11,9 +11,15 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import demo.bw.com.jingdong.R;
 import demo.bw.com.jingdong.bean.CartBean;
+import demo.bw.com.jingdong.utils.EventCheck;
+import demo.bw.com.jingdong.utils.EventCount;
 
 /**
  * Created by 李岳峰 on 2017/12/10.
@@ -68,13 +74,101 @@ public class ShopAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        return null;
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        final GroupViewHolder holder;
+        if(convertView==null){
+            holder=new GroupViewHolder();
+            convertView=inflater.inflate(R.layout.fs_group,null);
+            holder.gcheck=convertView.findViewById(R.id.fs_g_check);
+            holder.gname=convertView.findViewById(R.id.fs_g_name);
+            convertView.setTag(holder);
+        }else{
+            holder= (GroupViewHolder) convertView.getTag();
+        }
+        final CartBean.DataBean dataBean = grouplist.get(groupPosition);
+        holder.gcheck.setChecked(dataBean.isChecked());
+        holder.gname.setText(dataBean.getSellerName());
+        holder.gcheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dataBean.setChecked(holder.gcheck.isChecked());
+                changechild(groupPosition,holder.gcheck.isChecked());
+                PostValue(isgroupAll());
+                EventBus.getDefault().postSticky(priceAndnum());
+                notifyDataSetChanged();
+            }
+        });
+        return convertView;
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+    public View getChildView(final int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final ChildViewHolder holder;
+        if (convertView==null) {
+            holder=new ChildViewHolder();
+            convertView=inflater.inflate(R.layout.fs_child,null);
+            holder.image=convertView.findViewById(R.id.fs_c_image);
+            holder.ccheck=convertView.findViewById(R.id.fs_c_check);
+            holder.cname=convertView.findViewById(R.id.fs_c_name);
+            holder.num=convertView.findViewById(R.id.fs_c_num);
+            holder.cprice=convertView.findViewById(R.id.fs_c_price);
+            holder.add=convertView.findViewById(R.id.fs_c_add);
+            holder.lose=convertView.findViewById(R.id.fs_c_lose);
+            convertView.setTag(holder);
+        }else{
+           holder= (ChildViewHolder) convertView.getTag();
+        }
+     final CartBean.DataBean.ListBean listBeans = childlist.get(groupPosition).get(childPosition);
+        holder.ccheck.setChecked(listBeans.isChecked());
+        String[] split = listBeans.getImages().split("\\|");
+        String s = split[0];
+        holder.image.setImageURI(s);
+        holder.cname.setText(listBeans.getTitle());
+        holder.num.setText(listBeans.getNum()+"");
+        holder.cprice.setText("￥"+listBeans.getPrice());
+        holder.ccheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listBeans.setChecked(holder.ccheck.isChecked());
+                EventBus.getDefault().postSticky(priceAndnum());
+                if(holder.ccheck.isChecked()){
+                      if(ischildAll(groupPosition)){
+                          changeGroup(groupPosition,true);
+                          PostValue(isgroupAll());
+                      }
+                }else{
+                    changeGroup(groupPosition,false);
+                    PostValue(false);
+                }
+                notifyDataSetChanged();
+            }
+        });
+        holder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int num = listBeans.getNum();
+                holder.num.setText(++num+"");
+                listBeans.setNum(num);
+                EventBus.getDefault().postSticky(priceAndnum());
+                notifyDataSetChanged();
+            }
+        });
+        holder.lose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int num1 = listBeans.getNum();
+                if(num1==0){
+                    return;
+                }
+                holder.num.setText(--num1+"");
+                listBeans.setNum(num1);
+
+                EventBus.getDefault().postSticky(priceAndnum());
+                notifyDataSetChanged();
+            }
+        });
+
+        return convertView;
     }
 
     @Override
@@ -92,5 +186,92 @@ public class ShopAdapter extends BaseExpandableListAdapter {
         ImageView add;
         TextView num;
         ImageView lose;
+        TextView cprice;
+    }
+    public EventCount priceAndnum(){
+        int num=0;
+        int price=0;
+        for(int i=0;i<childlist.size();i++){
+            List<CartBean.DataBean.ListBean> list = childlist.get(i);
+            for(int j=0;j<list.size();j++){
+                CartBean.DataBean.ListBean listBean = list.get(j);
+                if(listBean.isChecked()){
+                    num+=listBean.getNum();
+                    price+=listBean.getPrice()*listBean.getNum();
+                }
+            }
+        }
+        EventCount count=new EventCount();
+        count.setNum(num);
+        count.setPrice(price);
+        return count;
+    }
+    public boolean ischildAll(int gp){
+        List<CartBean.DataBean.ListBean> listBeans = childlist.get(gp);
+        for(int i=0;i<listBeans.size();i++){
+            CartBean.DataBean.ListBean listBean = listBeans.get(i);
+            if (!listBean.isChecked()) {
+                return false;
+            }
+
+        }
+        return  true;
+    }
+    public boolean isgroupAll(){
+
+        for(int i=0;i<grouplist.size();i++){
+            CartBean.DataBean dataBean = grouplist.get(i);
+            if(!dataBean.isChecked()){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void changeGroup(int gp,boolean flag){
+        CartBean.DataBean dataBean = grouplist.get(gp);
+        dataBean.setChecked(flag);
+    }
+    public void PostValue(boolean flag){
+        EventCheck eventCheck=new EventCheck();
+        eventCheck.setChecked(flag);
+        EventBus.getDefault().postSticky(eventCheck);
+    }
+    public void changechild(int gp,boolean flag){
+        List<CartBean.DataBean.ListBean> listBeans = childlist.get(gp);
+        for(int i=0;i<listBeans.size();i++){
+            CartBean.DataBean.ListBean listBean = listBeans.get(i);
+                listBean.setChecked(flag);
+        }
+       notifyDataSetChanged();
+    }
+    public void changeAll(boolean flag){
+        for(int i=0;i<grouplist.size();i++){
+            changechild(i,flag);
+            changeGroup(i,flag);
+
+        }
+        EventBus.getDefault().postSticky(priceAndnum());
+        notifyDataSetChanged();
+    }
+
+    public List<String>  delSelect(){
+        List<String>  plist=new ArrayList<>();
+        for(int i=0;i<childlist.size();i++){
+            List<CartBean.DataBean.ListBean> list = childlist.get(i);
+            for(int j=0;j<list.size();j++){
+                CartBean.DataBean.ListBean listBean = list.get(j);
+                if(listBean.isChecked()){
+                    plist.add(listBean.getPid()+"");
+                    CartBean.DataBean.ListBean remove = list.remove(j);
+                    if(j==0){
+                         grouplist.remove(i);
+                         childlist.remove(i);
+                    }
+                }
+            }
+        }
+        EventBus.getDefault().postSticky(priceAndnum());
+        notifyDataSetChanged();
+       return  plist;
     }
 }

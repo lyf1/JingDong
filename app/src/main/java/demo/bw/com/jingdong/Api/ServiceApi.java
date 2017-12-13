@@ -28,7 +28,7 @@ public interface ServiceApi {
     @GET("product/getProductDetail")
     Call<SearchDetailBean> SearchDetailData(@Query("pid") String pid,@Query("source") String source);
 
-    @GET("product/addCart?uid=71&source=android")
+    @GET("product/addCart?uid=100&source=android")
     Call<BaseBean> addCartData(@Query("pid") String pid);
 
     @GET("ad/getAd")
@@ -43,6 +43,16 @@ public interface ServiceApi {
     @GET("product/getProducts")
     Call<c_childBean> getProducts(@Query("pscid") String pscid, @Query("page") String page);
 
-   @GET("product/getCarts?uid=71")
-    Call<CartBean> getCarts();
+    @GET("product/getCarts?source=android")
+    Call<CartBean> getCarts(@Query("uid") String uid);
+
+    @GET("product/deleteCart?uid=100")
+    Call<BaseBean>  DeleteCart(@Query("pid") String pid);
+
+    @GET("user/login")
+    Call<BaseBean> login(@Query("mobile") String mob,@Query("password") String pwd);
+
+     @GET("user/reg")
+    Call<BaseBean> regist(@Query("mobile") String mob,@Query("password") String pwd);
+
 }

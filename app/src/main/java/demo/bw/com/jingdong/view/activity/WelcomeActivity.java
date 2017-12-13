@@ -35,6 +35,9 @@ public class WelcomeActivity extends AppCompatActivity {
         timer.schedule(task,3000);
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

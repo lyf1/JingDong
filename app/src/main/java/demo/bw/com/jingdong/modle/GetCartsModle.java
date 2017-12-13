@@ -1,8 +1,12 @@
 package demo.bw.com.jingdong.modle;
 
+import android.util.Log;
+
+import demo.bw.com.jingdong.Api.OnListenerApi;
 import demo.bw.com.jingdong.Api.ServiceApi;
 import demo.bw.com.jingdong.Api.getCartsImm;
 import demo.bw.com.jingdong.bean.CartBean;
+import demo.bw.com.jingdong.utils.OkHttpUtils;
 import demo.bw.com.jingdong.utils.RetrofitHelper;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -20,19 +24,21 @@ import retrofit2.Response;
  */
 
 public class GetCartsModle implements getCartsImm {
-    @Override
+
+   @Override
     public void onImm(final Observer<CartBean> observer) {
         Observable.create(new ObservableOnSubscribe<CartBean>() {
 
             @Override
             public void subscribe(ObservableEmitter<CartBean> e) throws Exception {
                 ServiceApi si=RetrofitHelper.getService();
-                Call<CartBean> carts = si.getCarts();
+                Call<CartBean> carts = si.getCarts("100");
                 carts.enqueue(new Callback<CartBean>() {
                     @Override
                     public void onResponse(Call<CartBean> call, Response<CartBean> response) {
-                        observer.onComplete();
                         observer.onNext(response.body());
+                        observer.onComplete();
+
                     }
 
                     @Override

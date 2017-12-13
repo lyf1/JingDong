@@ -8,5 +8,5 @@ import io.reactivex.Observer;
  */
 
 public interface getCartsImm {
-    public void onImm(Observer<CartBean> observer);
+     void onImm(Observer<CartBean> observer);
 }
