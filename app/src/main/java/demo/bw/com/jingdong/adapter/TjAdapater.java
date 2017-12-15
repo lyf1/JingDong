@@ -14,23 +14,22 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
-import demo.bw.com.jingdong.Api.OnListenerClickApi;
 import demo.bw.com.jingdong.R;
-import demo.bw.com.jingdong.bean.SearchBean;
 import demo.bw.com.jingdong.bean.c_childBean;
+import demo.bw.com.jingdong.bean.fristBean;
 import demo.bw.com.jingdong.view.activity.ProductsActivity;
 
 /**
- * Created by 李岳峰 on 2017/12/9.
+ * Created by 李岳峰 on 2017/12/14.
  */
 
-public class ProducrtsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TjAdapater extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private List<c_childBean.DataBean> list;
+    private List<fristBean.TuijianBean.ListBean> list;
     private LayoutInflater inflater;
 
 
-    public ProducrtsAdapter(Context context, List<c_childBean.DataBean> list) {
+    public TjAdapater(Context context, List<fristBean.TuijianBean.ListBean> list) {
         this.context = context;
         this.list = list;
         inflater=LayoutInflater.from(context);
@@ -44,8 +43,8 @@ public class ProducrtsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-      MyViewHolder myViewHolder= (MyViewHolder) holder;
-        final c_childBean.DataBean dataBean = list.get(position);
+        MyViewHolder myViewHolder= (MyViewHolder) holder;
+        final fristBean.TuijianBean.ListBean dataBean = list.get(position);
 
         myViewHolder.title.setText(dataBean.getTitle());
         myViewHolder.price.setText("￥"+dataBean.getPrice())
@@ -62,7 +61,7 @@ public class ProducrtsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 Intent intent = new Intent(context, ProductsActivity.class);
                 intent.putExtra("pid", dataBean.getPid()+"");
-                 context.startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }

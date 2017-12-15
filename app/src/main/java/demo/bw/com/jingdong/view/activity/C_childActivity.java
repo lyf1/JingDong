@@ -19,7 +19,7 @@ import demo.bw.com.jingdong.adapter.ProducrtsAdapter;
 import demo.bw.com.jingdong.bean.c_childBean;
 import demo.bw.com.jingdong.presenter.ProductsPresenter;
 
-public class C_childActivity extends AppCompatActivity implements childActivityApi, OnListenerClickApi {
+public class C_childActivity extends AppCompatActivity implements childActivityApi {
 
     @BindView(R.id.p_rv)
     RecyclerView pRv;
@@ -46,14 +46,9 @@ public class C_childActivity extends AppCompatActivity implements childActivityA
 
     @Override
     public void onProducts(List<c_childBean.DataBean> list) {
-        ProducrtsAdapter producrtsAdapter = new ProducrtsAdapter(this, list, this);
+        ProducrtsAdapter producrtsAdapter = new ProducrtsAdapter(this, list);
         pRv.setAdapter(producrtsAdapter);
     }
 
-    @Override
-    public void setOnClieck(String id) {
-        Intent intent = new Intent(this, ProductsActivity.class);
-        intent.putExtra("pid", id);
-        startActivity(intent);
-    }
+
 }

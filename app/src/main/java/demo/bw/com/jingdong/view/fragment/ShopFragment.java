@@ -1,8 +1,10 @@
 package demo.bw.com.jingdong.view.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +80,7 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
             fsExpand.expandGroup(i);
         }
     }
-
+    //删除成功或失败返回数据
     @Override
     public void showData(String str) {
         Toast.makeText(getActivity(),str, Toast.LENGTH_SHORT).show();
@@ -90,13 +92,13 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
         unbinder.unbind();
     }
 
-
+    //返回价钱和数量
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onMessage(EventCount eventCount) {
         fsPrice.setText(eventCount.getPrice() + "");
         fsNum.setText("去结算(" + eventCount.getNum() + ")");
     }
-
+    //反选如果子类全选就选中
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onMessage(EventCheck even) {
         fsQx.setChecked(even.isChecked());
@@ -116,16 +118,32 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
         EventBus.getDefault().unregister(getActivity());
     }
 
-
     @OnClick({R.id.fs_del, R.id.fs_num})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fs_del:
-                List<String>  list = adapter.delSelect();
-                DeleteCartPresenter deleteCartPresenter = new DeleteCartPresenter(this);
-                for(int i=0;i<list.size();i++){
-                    String s = list.get(i);
-                    deleteCartPresenter.getDelete(s);
+                //点击删除 判断 非空 如果非就弹框进行删除
+                final List<String> pidlist = adapter.getPid();
+                final DeleteCartPresenter deleteCartPresenter = new DeleteCartPresenter(this);
+                if(pidlist.size()==0||pidlist.isEmpty()){
+                     Toast.makeText(getActivity(),"请选中,在删除",Toast.LENGTH_SHORT).show();
+                }else{
+                    final AlertDialog.Builder normalDialog = new AlertDialog.Builder(getActivity());
+                    normalDialog.setTitle("删除");
+                    normalDialog.setMessage("确定要删除吗？");
+                    normalDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            adapter.delSelect();
+
+                            for(int i=0;i<pidlist.size();i++){
+                                String s = pidlist.get(i);
+                                deleteCartPresenter.getDelete(s);
+                            }
+                        }
+                    });
+                    normalDialog.setNegativeButton("取消",null);
+                    normalDialog.show();
                 }
                 break;
             case R.id.fs_num:

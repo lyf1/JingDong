@@ -76,7 +76,6 @@ public class SearchDetailActivity extends Activity implements SearchDetailActivi
                 finish();
                 break;
             case R.id.sd_addcart:
-
                 AddCartPresenter addCartPresenter = new AddCartPresenter(this);
                 addCartPresenter.getAddCart(pid);
                 break;

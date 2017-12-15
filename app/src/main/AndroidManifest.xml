@@ -15,17 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.MainActivity" />
-        <activity
-            android:name=".view.activity.WelcomeActivity"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.WelcomeActivity" />
         <activity
             android:name=".view.activity.SearchActivity"
             android:label="@string/title_activity_search" />
@@ -35,7 +32,19 @@
         <activity android:name=".view.activity.C_childActivity" />
         <activity android:name=".view.activity.ProductsActivity" />
         <activity android:name=".view.activity.LoginActivity" />
-        <activity android:name=".view.activity.RegistActivity"></activity>
+        <activity android:name=".view.activity.RegistActivity" />
+        <activity android:name=".view.activity.Fa_activity" />
+        <activity android:name=".view.activity.SeckillActivity" />
+        <activity android:name=".view.activity.SettingActivity" />
+
+        <meta-data
+            android:name="design_width"
+            android:value="768"></meta-data>
+        <meta-data
+            android:name="design_height"
+            android:value="1280"></meta-data>
+
+        <activity android:name=".view.activity.AplayActivity"></activity>
     </application>
 
 </manifest>

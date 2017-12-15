@@ -47,6 +47,11 @@ public class LoginActivity extends AppCompatActivity implements LoginApi{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.l_back:
+                Intent intent2=new Intent(LoginActivity.this, MainActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("account","登录/注册>");
+                intent2.putExtras(bundle);
+                LoginActivity.this.setResult(2,intent2);
                 finish();
                 break;
             case R.id.l_log:
@@ -54,8 +59,8 @@ public class LoginActivity extends AppCompatActivity implements LoginApi{
                 lp.getOnLogin(lMob.getText().toString().trim(),lPwd.getText().toString().trim());
                 break;
             case R.id.l_reg:
-                Intent intent=new Intent(LoginActivity.this,RegistActivity.class);
-                startActivity(intent);
+                Intent intent1=new Intent(LoginActivity.this,RegistActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.l_qq:
                 break;

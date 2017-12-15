@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import demo.bw.com.jingdong.R;
 import demo.bw.com.jingdong.view.activity.LoginActivity;
+import demo.bw.com.jingdong.view.activity.SettingActivity;
 
 /**
  * Created by 李岳峰 on 2017/12/1.
@@ -50,6 +51,8 @@ public class MineFragment extends Fragment {
                         LoginActivity.class), 1);
                 break;
             case R.id.fm_set:
+                Intent intent=new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -61,6 +64,11 @@ public class MineFragment extends Fragment {
             Bundle bundle = data.getExtras();
             String account = bundle.getString("account");
             fmLor.setText(account);
+        }else if(resultCode==2){
+            Bundle bundle = data.getExtras();
+            String account = bundle.getString("account");
+            fmLor.setText(account);
         }
+
     }
 }

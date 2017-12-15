@@ -1,5 +1,7 @@
 package demo.bw.com.jingdong.presenter;
 
+import android.content.DialogInterface;
+
 import demo.bw.com.jingdong.Api.ShopFragmentApi;
 import demo.bw.com.jingdong.bean.BaseBean;
 import demo.bw.com.jingdong.modle.DeleteCartModle;
@@ -14,7 +16,7 @@ public class DeleteCartPresenter {
     private ShopFragmentApi si;
     private final DeleteCartModle dc;
 
-    public DeleteCartPresenter(ShopFragmentApi si) {
+    public DeleteCartPresenter(ShopFragmentApi  si) {
         this.si = si;
         dc = new DeleteCartModle();
     }

@@ -5,8 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="black">#211c1e</color>
     <color name="red">#ed0707</color>
-    <color name="ashen">#ded4d4</color>
+    <color name="ashen">#e9e2e2</color>
     <color name="write">#fdffff</color>
     <color name="yellow">#f7e703</color>
+    <color name="blue">#039ef7</color>
+    <color name="orange">#FF4500</color>
+    <color name="pink">#FF69B4</color>
 
 </resources>

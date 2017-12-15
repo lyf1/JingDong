@@ -35,15 +35,19 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
     TextView cpCart;
     @BindView(R.id.cp_addcart)
     TextView cpAddcart;
-   private String id;
+    @BindView(R.id.cp_aplay)
+    TextView cpAplay;
+
+    private String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
+        setContentView(R.layout.productsdetail);
         ButterKnife.bind(this);
         Intent intent = getIntent();
         String pid = intent.getStringExtra("pid");
-        id=pid;
+        id = pid;
         SearchDetailPresenter sp = new SearchDetailPresenter(this);
         sp.getSearchDetail(pid);
     }
@@ -54,7 +58,7 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
         String s = split[0];
         Uri uri = Uri.parse(s);
         cpImg.setImageURI(uri);
-        cpPrice.setText("￥"+list.getPrice());
+        cpPrice.setText("￥" + list.getPrice());
         cpTitle.setText(list.getTitle());
     }
 
@@ -63,15 +67,15 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.cp_back, R.id.cp_cart, R.id.cp_addcart})
+    @OnClick({R.id.cp_back, R.id.cp_cart, R.id.cp_addcart, R.id.cp_aplay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cp_back:
                 finish();
                 break;
             case R.id.cp_cart:
-                Intent intent=new Intent(this, MainActivity.class);
-                intent.putExtra("flag",1);
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("flag", 1);
                 startActivity(intent);
                 finish();
                 break;
@@ -79,6 +83,12 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
                 AddCartPresenter addCartPresenter = new AddCartPresenter(this);
                 addCartPresenter.getAddCart(id);
                 break;
+            case R.id.cp_aplay:
+             Intent intent1=new Intent(this,AplayActivity.class);
+             startActivity(intent1);
+                break;
         }
     }
+
+
 }

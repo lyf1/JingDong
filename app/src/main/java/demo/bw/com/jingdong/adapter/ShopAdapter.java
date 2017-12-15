@@ -254,7 +254,7 @@ public class ShopAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
-    public List<String>  delSelect(){
+    public List<String>  getPid(){
         List<String>  plist=new ArrayList<>();
         for(int i=0;i<childlist.size();i++){
             List<CartBean.DataBean.ListBean> list = childlist.get(i);
@@ -262,16 +262,29 @@ public class ShopAdapter extends BaseExpandableListAdapter {
                 CartBean.DataBean.ListBean listBean = list.get(j);
                 if(listBean.isChecked()){
                     plist.add(listBean.getPid()+"");
+
+                }
+            }
+        }
+
+        notifyDataSetChanged();
+       return  plist;
+    }
+    public void delSelect(){
+        for(int i=0;i<childlist.size();i++){
+            List<CartBean.DataBean.ListBean> list = childlist.get(i);
+            for(int j=0;j<list.size();j++){
+                CartBean.DataBean.ListBean listBean = list.get(j);
+                if(listBean.isChecked()){
                     CartBean.DataBean.ListBean remove = list.remove(j);
                     if(j==0){
-                         grouplist.remove(i);
-                         childlist.remove(i);
+                        grouplist.remove(i);
+                        childlist.remove(i);
                     }
                 }
             }
         }
         EventBus.getDefault().postSticky(priceAndnum());
         notifyDataSetChanged();
-       return  plist;
     }
 }
