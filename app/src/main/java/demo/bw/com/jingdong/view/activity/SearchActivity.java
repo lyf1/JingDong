@@ -56,6 +56,11 @@ public class SearchActivity extends Activity implements SearchActivityapi,OnList
             case R.id.s_bss:
                 String name= sSs.getText().toString().trim();
                 if(TextUtils.isEmpty(name)){
+
+
+
+
+
                     Toast.makeText(this,"输入框不能为空",Toast.LENGTH_SHORT).show();
                 }
                 else{
