@@ -39,6 +39,8 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
     TextView cpAplay;
 
     private String id;
+    private double price;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,8 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
         String s = split[0];
         Uri uri = Uri.parse(s);
         cpImg.setImageURI(uri);
-        cpPrice.setText("￥" + list.getPrice());
+        price = list.getPrice();
+        cpPrice.setText("￥" +  price);
         cpTitle.setText(list.getTitle());
     }
 
@@ -84,7 +87,9 @@ public class ProductsActivity extends AppCompatActivity implements SearchDetailA
                 addCartPresenter.getAddCart(id);
                 break;
             case R.id.cp_aplay:
+
              Intent intent1=new Intent(this,AplayActivity.class);
+              intent1.putExtra("price",price);
              startActivity(intent1);
                 break;
         }

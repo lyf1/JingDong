@@ -1,6 +1,7 @@
 package demo.bw.com.jingdong.view.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +19,9 @@ import demo.bw.com.jingdong.R;
 import demo.bw.com.jingdong.presenter.loginPersenter;
 import demo.bw.com.jingdong.view.MainActivity;
 
+/**
+ * 登录
+ */
 public class LoginActivity extends AppCompatActivity implements LoginApi{
 
     @BindView(R.id.l_back)
@@ -51,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoginApi{
                 Bundle bundle=new Bundle();
                 bundle.putString("account","登录/注册>");
                 intent2.putExtras(bundle);
-                LoginActivity.this.setResult(2,intent2);
+                LoginActivity.this.setResult(11,intent2);
                 finish();
                 break;
             case R.id.l_log:
@@ -73,11 +77,17 @@ public class LoginActivity extends AppCompatActivity implements LoginApi{
     public void getLogin(String str) {
         Toast.makeText(LoginActivity.this,str,Toast.LENGTH_SHORT).show();
         if(str.equals("登录成功")){
+            //将登陆信息存储到SharedPreferences
+            SharedPreferences.Editor editor=getSharedPreferences("Message",MODE_PRIVATE).edit();
+            editor.putBoolean("istrue",true);
+            editor.putString("uname",lMob.getText().toString().trim());
+            editor.commit();
+            //登录成功后跳转
            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
            Bundle bundle=new Bundle();
            bundle.putString("account",lMob.getText().toString().trim());
            intent.putExtras(bundle);
-            LoginActivity.this.setResult(1,intent);
+            LoginActivity.this.setResult(10,intent);
             finish();
         }
     }

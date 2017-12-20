@@ -1,6 +1,8 @@
 package demo.bw.com.jingdong.view.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +33,11 @@ import demo.bw.com.jingdong.presenter.DeleteCartPresenter;
 import demo.bw.com.jingdong.presenter.GetCartsPersenter;
 import demo.bw.com.jingdong.utils.EventCheck;
 import demo.bw.com.jingdong.utils.EventCount;
+import demo.bw.com.jingdong.view.MainActivity;
+import demo.bw.com.jingdong.view.activity.AplayActivity;
+import demo.bw.com.jingdong.view.activity.LoginActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by 李岳峰 on 2017/12/1.
@@ -52,6 +59,18 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
     TextView fsDel;
     private ShopAdapter adapter;
     private int pid;
+    private GetCartsPersenter getCartsPersenter;
+    private double price;
+    private boolean istrue;
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCartsPersenter = new GetCartsPersenter(this);
+        getCartsPersenter.getCarts();
+
+    }
 
     @Nullable
     @Override
@@ -59,15 +78,27 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
 
         unbinder = ButterKnife.bind(this, view);
-        GetCartsPersenter getCartsPersenter = new GetCartsPersenter(this);
-        getCartsPersenter.getCarts();
-        fsQx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.changeAll(fsQx.isChecked());
+        SharedPreferences message = getActivity().getSharedPreferences("Message", MODE_PRIVATE);
+        istrue = message.getBoolean("istrue", false);
+        if(istrue==false) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        }
 
-            }
-        });
+
+
+            fsQx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.changeAll(fsQx.isChecked());
+                }
+            });
+
+
+
+
+
+
         return view;
     }
 
@@ -95,7 +126,8 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
     //返回价钱和数量
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onMessage(EventCount eventCount) {
-        fsPrice.setText(eventCount.getPrice() + "");
+        price = eventCount.getPrice();
+        fsPrice.setText(this.price + "");
         fsNum.setText("去结算(" + eventCount.getNum() + ")");
     }
     //反选如果子类全选就选中
@@ -109,6 +141,7 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EventBus.getDefault().register(this);
     }
 
@@ -147,6 +180,9 @@ public class ShopFragment extends Fragment implements ShopFragmentApi {
                 }
                 break;
             case R.id.fs_num:
+                Intent intent1=new Intent(getActivity(),AplayActivity.class);
+                intent1.putExtra("price",price);
+                startActivity(intent1);
                 break;
         }
     }

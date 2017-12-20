@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +25,9 @@ import demo.bw.com.jingdong.adapter.SearchAdapater;
 import demo.bw.com.jingdong.bean.SearchBean;
 import demo.bw.com.jingdong.presenter.SearchPersenter;
 
+/**
+ * 首页 搜索 展示数据
+ */
 public class SearchActivity extends Activity implements SearchActivityapi,OnListenerClickApi {
 
     @BindView(R.id.s_back)
@@ -48,8 +54,15 @@ public class SearchActivity extends Activity implements SearchActivityapi,OnList
                 finish();
                 break;
             case R.id.s_bss:
-                SearchPersenter searchPersenter = new SearchPersenter((SearchActivityapi) this);
-                searchPersenter.getSearch(sSs.getText().toString().trim(), "1");
+                String name= sSs.getText().toString().trim();
+                if(TextUtils.isEmpty(name)){
+                    Toast.makeText(this,"输入框不能为空",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    SearchPersenter searchPersenter = new SearchPersenter((SearchActivityapi) this);
+                    searchPersenter.getSearch(name, "1");
+                }
+
                 break;
         }
     }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.hjm.bottomtabbar.BottomTabBar;
+import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +19,7 @@ import demo.bw.com.jingdong.view.fragment.FirstFragment;
 import demo.bw.com.jingdong.view.fragment.MineFragment;
 import demo.bw.com.jingdong.view.fragment.ShopFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AutoLayoutActivity{
 
     @BindView(R.id.bottom_tab_bar)
     BottomTabBar bottomTabBar;

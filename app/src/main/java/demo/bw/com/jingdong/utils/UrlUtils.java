@@ -6,4 +6,5 @@ package demo.bw.com.jingdong.utils;
 
 public class UrlUtils {
     public static final  String HOST="http://120.27.23.105/";
+    public static final String HOSTPDD="http://apiv3.yangkeduo.com/";
 }

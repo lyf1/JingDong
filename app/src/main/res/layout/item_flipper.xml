@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/scrollview_bg"
+        android:text="热议"
+        android:gravity="center_vertical"
+        android:textColor="#F14C00"
+        android:textSize="12sp" />
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:paddingBottom="10dp"
+        android:paddingLeft="3dp"
+        android:paddingTop="4dp"
+        android:text="BreakingNews"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"></TextView>
+
+    <ImageView
+        android:id="@+id/iv_closebreak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:paddingRight="3dp"
+       />
+</LinearLayout>

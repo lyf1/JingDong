@@ -19,6 +19,9 @@ import demo.bw.com.jingdong.adapter.ProducrtsAdapter;
 import demo.bw.com.jingdong.bean.c_childBean;
 import demo.bw.com.jingdong.presenter.ProductsPresenter;
 
+/**
+ *  分类 商品展示
+ */
 public class C_childActivity extends AppCompatActivity implements childActivityApi {
 
     @BindView(R.id.p_rv)

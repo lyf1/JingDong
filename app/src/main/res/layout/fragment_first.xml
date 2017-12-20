@@ -64,7 +64,68 @@
                    />
            </RelativeLayout>
        </com.youth.banner.Banner>
+       <!--京东头条-->
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="10%w"
+        app:layout_widthPercent="100%w"
+        android:orientation="horizontal"
+        android:background="@color/ashen"
 
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sstitle"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="京东"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="快报"
+                android:background="@color/red"
+                android:textColor="@color/write"
+                />
+        <ViewFlipper
+            android:id="@+id/flipper"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:autoStart="true"
+            android:flipInterval="3000"
+            android:inAnimation="@anim/push_up_in"
+            android:outAnimation="@anim/push_up_out"></ViewFlipper>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="|"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="更多"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+    </com.zhy.android.percent.support.PercentLinearLayout>
        <android.support.v4.view.ViewPager
            android:id="@+id/fa_viewpage"
            android:layout_width="0dp"
@@ -76,7 +137,7 @@
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_heightPercent="10%w"
+            app:layout_heightPercent="8%w"
             app:layout_widthPercent="100%w"
             android:orientation="horizontal"
             android:background="@color/ashen"
@@ -455,7 +516,7 @@
        <com.zhy.android.percent.support.PercentLinearLayout
            android:layout_width="0dp"
            android:layout_height="0dp"
-           app:layout_heightPercent="10%w"
+           app:layout_heightPercent="8%w"
            app:layout_widthPercent="100%w"
            android:orientation="horizontal"
            android:background="@color/ashen"

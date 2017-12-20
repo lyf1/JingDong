@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,13 +35,17 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import demo.bw.com.jingdong.Api.fristFragmentApi;
 import demo.bw.com.jingdong.R;
-import demo.bw.com.jingdong.adapter.ProducrtsAdapter;
 import demo.bw.com.jingdong.adapter.TjAdapater;
 import demo.bw.com.jingdong.bean.fristBean;
 import demo.bw.com.jingdong.presenter.fristPresenter;
+import demo.bw.com.jingdong.utils.AdDialog;
 import demo.bw.com.jingdong.utils.GlideImageLoader;
 import demo.bw.com.jingdong.view.activity.SearchActivity;
 import demo.bw.com.jingdong.view.activity.SeckillActivity;
+import demo.bw.com.jingdong.view.activity.erweima.MipcaActivityCapture;
+import demo.bw.com.jingdong.view.activity.erweima.WebViewActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by 李岳峰 on 2017/12/1.
@@ -87,12 +95,14 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
     LinearLayout faMsLogo;
     @BindView(R.id.fa_tj_rv)
     RecyclerView faTjRv;
-   //倒计时
+    @BindView(R.id.flipper)
+    ViewFlipper flipper;
+    //倒计时
     private long mHour = 02;
     private long mMin = 15;
     private long mSecond = 36;
     private boolean isRun = true;
-
+    private final static int SCANNIN_GREQUEST_CODE = 1;
     private Handler timeHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -122,13 +132,16 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
     private List<Fragment> flist = new ArrayList<>();
     private F_fragment01 fragment01 = new F_fragment01();
     private F_fragment02 fragment02 = new F_fragment02();
+    private List testList;
+    private int count;
+    private AdDialog dialog2;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         unbinder = ButterKnife.bind(this, view);
-        faTjRv.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        faTjRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         startRun();
         //秒杀底部图片
         faMsImg1.setImageURI(Uri.parse("http://img3.imgtn.bdimg.com/it/u=2582268618,2692242955&fm=27&gp=0.jpg"));
@@ -170,8 +183,16 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
             public void onPageScrollStateChanged(int state) {
             }
         });
+        //京东头条
+
+         BannerHead();
+         dialog2 = new AdDialog(getActivity());
+        dialog2.show();
+
         return view;
     }
+
+
 
 
     @Override
@@ -179,11 +200,15 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
         super.onDestroyView();
         unbinder.unbind();
     }
-
+   //页面的点击的事件
     @OnClick({R.id.dimension, R.id.sc, R.id.msg, R.id.fa_ms, R.id.fa_ms_logo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.dimension:
+                //扫描二维码
+                Intent intent3 = new Intent(getActivity(), MipcaActivityCapture.class);
+                intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivityForResult(intent3,4);
                 break;
             case R.id.sc:
                 Intent intent = new Intent(getContext(), SearchActivity.class);
@@ -195,14 +220,15 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
                 Intent intent1 = new Intent(getContext(), SeckillActivity.class);
                 startActivity(intent1);
                 break;
-                //点击进入秒杀
+            //点击进入秒杀
             case R.id.fa_ms_logo:
                 Intent intent2 = new Intent(getContext(), SeckillActivity.class);
                 startActivity(intent2);
                 break;
         }
     }
-   //接受处理后的数据
+
+    //接受处理后的数据
     @Override
     public void ShowData(fristBean bean) {
         List<fristBean.DataBean> data = bean.getData();
@@ -217,7 +243,7 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
         faBanner.start();
         //底部推荐
         List<fristBean.TuijianBean.ListBean> list = bean.getTuijian().getList();
-        TjAdapater tjAdapater=new TjAdapater(getActivity(),list);
+        TjAdapater tjAdapater = new TjAdapater(getActivity(), list);
         faTjRv.setAdapter(tjAdapater);
     }
 
@@ -252,4 +278,50 @@ public class FirstFragment extends Fragment implements fristFragmentApi {
             }
         }
     }
+    //京东头条
+    private void BannerHead() {
+        testList = new ArrayList();
+        testList.add(0, "爸妈爱的“白”娃娃，真是孕期吃出来的吗？");
+        testList.add(1, "如果徒步真的需要理由，十四个够不够？");
+        testList.add(2, "享受清爽啤酒的同时，这些常识你真的了解吗？");
+        testList.add(3, "三星Galaxy S8定型图无悬念");
+        testList.add(4, "家猫为何如此高冷？");
+        count = testList.size();
+        for (int i = 0; i < count; i++) {
+            final View ll_content = View.inflate(getContext(), R.layout.item_flipper, null);
+            TextView tv_content = (TextView) ll_content.findViewById(R.id.tv_content);
+            ImageView iv_closebreak = (ImageView) ll_content.findViewById(R.id.iv_closebreak);
+            tv_content.setText(testList.get(i).toString());
+            iv_closebreak.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //对当前显示的视图进行移除
+                    flipper.removeView(ll_content);
+                    count--;
+                    //当删除后仅剩 一条 新闻时，则取消滚动
+                    if (count == 1) {
+                        flipper.stopFlipping();
+                    }
+                }
+            });
+            flipper.addView(ll_content);
+        }
+    }
+    //二维码返回结果
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SCANNIN_GREQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra("result");
+                Log.i("xxx", result.toString());
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("url", result);
+                startActivity(intent);
+            }
+        }
+    }
 }
+
+

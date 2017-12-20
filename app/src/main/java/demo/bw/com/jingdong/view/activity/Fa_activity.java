@@ -11,6 +11,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import demo.bw.com.jingdong.R;
 
+/**
+ * 首页 滑动页面的值
+ */
 public class Fa_activity extends AppCompatActivity {
 
     @BindView(R.id.fa_c_back)

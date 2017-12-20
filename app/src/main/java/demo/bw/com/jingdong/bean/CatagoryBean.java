@@ -20,12 +20,20 @@ public class CatagoryBean extends  BaseBean{
 
     public static class DataBean {
 
-
+        private boolean check;
         private int cid;
         private String createtime;
         private String icon;
         private int ishome;
         private String name;
+
+        public boolean isCheck() {
+            return check;
+        }
+
+        public void setCheck(boolean check) {
+            this.check = check;
+        }
 
         public int getCid() {
             return cid;

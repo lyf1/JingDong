@@ -20,6 +20,9 @@ import demo.bw.com.jingdong.adapter.SeckllAdapter;
 import demo.bw.com.jingdong.bean.fristBean;
 import demo.bw.com.jingdong.presenter.fristPresenter;
 
+/**
+ * 秒杀 展示秒杀数据
+ */
 public class SeckillActivity extends AppCompatActivity implements fristFragmentApi {
 
     @BindView(R.id.s_back)

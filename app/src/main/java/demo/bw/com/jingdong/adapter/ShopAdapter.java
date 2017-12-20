@@ -190,7 +190,7 @@ public class ShopAdapter extends BaseExpandableListAdapter {
     }
     public EventCount priceAndnum(){
         int num=0;
-        int price=0;
+         double price=0.0;
         for(int i=0;i<childlist.size();i++){
             List<CartBean.DataBean.ListBean> list = childlist.get(i);
             for(int j=0;j<list.size();j++){

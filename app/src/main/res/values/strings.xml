@@ -1,9 +1,12 @@
 <resources>
-    <string name="app_name">JingDong</string>
+    <string name="app_name">李岳峰</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_welcome">李岳峰</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_search_detail">SearchDetailActivity</string>
+
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    <string name="title_activity_welcom">李岳峰</string>
 </resources>
